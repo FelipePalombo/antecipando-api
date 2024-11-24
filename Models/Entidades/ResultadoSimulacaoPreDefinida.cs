@@ -20,7 +20,7 @@ public class ResultadoSimulacaoPreDefinida : IResultadoSimulacao
     {
         MelhorOferta = Bancos
             .Where(b => b.ValorLiberado.HasValue)
-            .OrderBy(b => b.ValorLiberado.Value)
+            .OrderByDescending(b => b.ValorLiberado.Value)
             .FirstOrDefault();
     }
 

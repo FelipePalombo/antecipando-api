@@ -1,6 +1,7 @@
 ﻿namespace WebApi.Controllers;
 
 using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models.DTOs;
 using WebApi.Services;

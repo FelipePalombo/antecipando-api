@@ -59,12 +59,6 @@ var app = builder.Build();
 
 // configurar o pipeline de requisição HTTP
 {
-    // global cors policy
-    app.UseCors(x => x
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
-
     // manipulador global de erros
     app.UseMiddleware<ErrorHandlerMiddleware>();
 
@@ -76,8 +70,14 @@ var app = builder.Build();
         c.RoutePrefix = string.Empty; // Define o Swagger UI na raiz do aplicativo
     });
 
-    app.UseHttpsRedirection();
     app.UseRouting();
+    // global cors policy
+    app.UseCors(builder => builder
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetIsOriginAllowed((host) => true)
+        .AllowCredentials());
+    app.UseHttpsRedirection();
     app.UseAuthorization();
 }
 
