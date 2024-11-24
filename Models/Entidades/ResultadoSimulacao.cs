@@ -5,12 +5,13 @@ using WebApi.Models.Interfaces;
 
 public class ResultadoSimulacao : IResultadoSimulacao
 {
-    public int IdResultado { get; set; }
+    public int IdSolicitacao { get; set; }
     public IBanco MelhorOferta { get; set; }
     public IEnumerable<IBanco> Bancos { get; set; }
 
-    public ResultadoSimulacao()
+    public ResultadoSimulacao(int idSolicitacao)
     {
+        IdSolicitacao = idSolicitacao;
         Bancos = new List<IBanco>();
     }
 
@@ -19,9 +20,12 @@ public class ResultadoSimulacao : IResultadoSimulacao
         ((List<IBanco>)Bancos).Add(banco);
     }
 
-    public IBanco GetSimulacaoMelhorOferta()
+    public void DefinirMelhorOferta()
     {
-        return MelhorOferta;
+        MelhorOferta = Bancos
+            .Where(b => b.ValorLiberado.HasValue)
+            .OrderBy(b => b.ValorLiberado.Value)
+            .FirstOrDefault();
     }
 
     public IEnumerable<IBanco> GetTodasOfertas()
@@ -31,6 +35,6 @@ public class ResultadoSimulacao : IResultadoSimulacao
 
     public string GerarLinkCompartilhamento()
     {
-        return $"https://banco.com/simulacao/{IdResultado}";
+        return $"https://antecipando.com.br/simulacao/{IdSolicitacao}";
     }
 }

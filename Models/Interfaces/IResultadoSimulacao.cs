@@ -4,6 +4,6 @@ using System.Collections.Generic;
 
 public interface IResultadoSimulacao
 {
-    IBanco GetSimulacaoMelhorOferta();
+    void DefinirMelhorOferta();
     IEnumerable<IBanco> GetTodasOfertas();
 }

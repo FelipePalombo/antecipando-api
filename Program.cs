@@ -52,6 +52,7 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<ISimulacaoService, SimulacaoService>();
     
     services.AddScoped<IBancoRepositorio, BancoRepositorio>();
+    services.AddScoped<ISimulacaoRepositorio, SimulacaoRepositorio>();
 }
 
 var app = builder.Build();

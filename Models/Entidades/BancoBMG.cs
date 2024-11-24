@@ -6,25 +6,26 @@ using WebApi.Models.Interfaces;
 public class BancoBMG : IBanco
 {
     public int IdBanco { get; private set; }
-    public static string Nome { get; private set; } = "Banco BMG";
+    public string Nome { get; private set; }
     public string UrlBanco { get; private set; }
     public decimal? ValorLiberado { get; private set; } = null;
     public bool Disponibilidade { get; set; }
-    public string MotivoIndisponbilidade { get; set; }
+    public string MotivoIndisponibilidade { get; set; }
 
     private const decimal TAXA_JUROS = 0.0149m; // 1,49%
     private const decimal IOF_DIARIO_PF = 0.000082m; // 0,0082%
     private const decimal IOF_ADICIONAL = 0.0038m; // 0,38%
     private const decimal MAX_ANTECIPADO = 100000m;
 
-    public BancoBMG(int idBanco, string urlBanco, bool disponibilidade, string motivoIndisponbilidade, decimal? saldoFGTS, DateTime? dataNascimento)
+    public BancoBMG(int idBanco, string nome, string urlBanco, bool disponibilidade, string motivoIndisponbilidade, decimal? saldoFGTS, DateTime? dataNascimento)
     {
         IdBanco = idBanco;
+        Nome = nome;
         UrlBanco = urlBanco;
         if (saldoFGTS == null || dataNascimento == null)
         {
             Disponibilidade = false;
-            MotivoIndisponbilidade = motivoIndisponbilidade;
+            MotivoIndisponibilidade = motivoIndisponbilidade;
             ValorLiberado = null;
         }
         else
@@ -39,13 +40,13 @@ public class BancoBMG : IBanco
         if (ValorLiberado == null)
         {
             Disponibilidade = false;
-            MotivoIndisponbilidade = "Valor liberado não informado";
+            MotivoIndisponibilidade = "Valor liberado não informado";
         }
 
         if (ValorLiberado <= 0)
         {
             Disponibilidade = false;
-            MotivoIndisponbilidade = "Valor liberado inválido";
+            MotivoIndisponibilidade = "Valor liberado inválido";
         }
 
         if (ValorLiberado > 0)

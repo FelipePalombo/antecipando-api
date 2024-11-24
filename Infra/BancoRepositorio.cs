@@ -20,7 +20,7 @@ public class BancoRepositorio : IBancoRepositorio
     
     public BancoInfoDTO ObterDados(string nomeBanco)
     {
-        string query = "SELECT idBanco, urlBanco FROM bancos WHERE nome = @nomeBanco";
+        string query = "SELECT idBanco, urlBanco, nome FROM bancos WHERE nome = @nomeBanco";
         _connection.Open();
         var bancoInfo = _connection.QueryFirstOrDefault<BancoInfoDTO>(query, new { nomeBanco });
         _connection.Close();

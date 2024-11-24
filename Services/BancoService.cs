@@ -19,6 +19,7 @@ public class BancoInterService : IBancoService
 {
     private readonly BancoInterClient _bancoInterClient;
     private const int QUANTIDADE_PERIODOS = 10;
+    private const string NOME_BANCO = "Banco Inter";
     private readonly IBancoRepositorio _bancoRepositorio;
 
     public BancoInterService(BancoInterClient bancoInterClient, IBancoRepositorio bancoRepositorio)
@@ -30,22 +31,22 @@ public class BancoInterService : IBancoService
     public async Task<IBanco> CalcularSimulacaoAsync(SolicitacaoSimulacao solicitacao)
     {
         BancoInter bancoInter;
-        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(BancoInter.Nome);
+        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(NOME_BANCO);
 
         try 
         {
             decimal valorLiberado = await _bancoInterClient.SimularAsync(solicitacao.Usuario.GetSaldoFGTS(), QUANTIDADE_PERIODOS);
-            bancoInter = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, true, null, valorLiberado);
+            bancoInter = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, true, null, valorLiberado);
             bancoInter.CalcularValorLiberado();
         } 
         catch (HttpRequestException ex)
         {
-            bancoInter = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoInter = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoInter.ToString());
         }
         catch (Exception ex) 
         {
-            bancoInter = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoInter = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoInter.ToString());
         }
 
@@ -57,6 +58,7 @@ public class BancoPanService : IBancoService
 {
     private readonly BancoPanClient _bancoPanClient;
     private readonly IBancoRepositorio _bancoRepositorio;
+    private const string NOME_BANCO = "Banco Pan";
 
     public BancoPanService(BancoPanClient bancoPanClient, IBancoRepositorio bancoRepositorio)
     {
@@ -67,22 +69,22 @@ public class BancoPanService : IBancoService
     public async Task<IBanco> CalcularSimulacaoAsync(SolicitacaoSimulacao solicitacao)
     {
         BancoPan bancoPan;
-        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(BancoPan.Nome);
+        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(NOME_BANCO);
 
         try 
         {
             decimal valorLiberado = await _bancoPanClient.SimularAsync(solicitacao.Usuario.GetSaldoFGTS(), solicitacao.Usuario.GetDataNascimento());
-            bancoPan = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, true, null, valorLiberado);
+            bancoPan = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, true, null, valorLiberado);
             bancoPan.CalcularValorLiberado();
         } 
         catch (HttpRequestException ex)
         {
-            bancoPan = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoPan = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoPan.ToString());
         }
         catch (Exception ex) 
         {
-            bancoPan = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoPan = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoPan.ToString());
         }
 
@@ -94,6 +96,8 @@ public class BancoPagSeguroService : IBancoService
 {
     private readonly BancoPagSeguroClient _bancoPagSeguroClient;
     private readonly IBancoRepositorio _bancoRepositorio;
+    private const string NOME_BANCO = "Banco PagSeguro";
+
     public BancoPagSeguroService(BancoPagSeguroClient bancoPagSeguroClient, IBancoRepositorio bancoRepositorio)
     {
         _bancoPagSeguroClient = bancoPagSeguroClient;
@@ -103,22 +107,22 @@ public class BancoPagSeguroService : IBancoService
     public async Task<IBanco> CalcularSimulacaoAsync(SolicitacaoSimulacao solicitacao)
     {
         BancoPagSeguro bancoPagSeguro;
-        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(BancoPagSeguro.Nome);
+        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(NOME_BANCO);
 
         try 
         {   
             string valorLiberadoString = await _bancoPagSeguroClient.SimularAsync(solicitacao.Usuario.GetSaldoFGTS());
-            bancoPagSeguro = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, true, null, valorLiberadoString);
+            bancoPagSeguro = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, true, null, valorLiberadoString);
             bancoPagSeguro.CalcularValorLiberado();
         } 
         catch (HttpRequestException ex)
         {
-            bancoPagSeguro = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoPagSeguro = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoPagSeguro.ToString());
         }
         catch (Exception ex) 
         {
-            bancoPagSeguro = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoPagSeguro = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoPagSeguro.ToString());
         }
 
@@ -129,6 +133,8 @@ public class BancoPagSeguroService : IBancoService
 public class BancoSantanderService : IBancoService
 {
     private readonly IBancoRepositorio _bancoRepositorio;
+    private const string NOME_BANCO = "Banco Santander";
+
     public BancoSantanderService(IBancoRepositorio bancoRepositorio){
         _bancoRepositorio = bancoRepositorio;
     }
@@ -136,21 +142,21 @@ public class BancoSantanderService : IBancoService
     public async Task<IBanco> CalcularSimulacaoAsync(SolicitacaoSimulacao solicitacao)
     {
         BancoSantander bancoSantander;
-        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(BancoSantander.Nome);
+        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(NOME_BANCO);
 
         try 
         {   
-            bancoSantander = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, true, null, solicitacao.Usuario.GetSaldoFGTS(), solicitacao.Usuario.GetDataNascimento());
+            bancoSantander = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, true, null, solicitacao.Usuario.GetSaldoFGTS(), solicitacao.Usuario.GetDataNascimento());
             bancoSantander.CalcularValorLiberado();
         } 
         catch (HttpRequestException ex)
         {
-            bancoSantander = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null, null);
+            bancoSantander = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null, null);
             Console.WriteLine(bancoSantander.ToString());
         }
         catch (Exception ex) 
         {
-            bancoSantander = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null, null);
+            bancoSantander = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null, null);
             Console.WriteLine(bancoSantander.ToString());
         }
 
@@ -161,6 +167,7 @@ public class BancoSantanderService : IBancoService
 public class BancoBMGService : IBancoService
 {
     private readonly IBancoRepositorio _bancoRepositorio;
+    private const string NOME_BANCO = "Banco BMG";
     public BancoBMGService(IBancoRepositorio bancoRepositorio)
     {
         _bancoRepositorio = bancoRepositorio;
@@ -169,20 +176,20 @@ public class BancoBMGService : IBancoService
     public async Task<IBanco> CalcularSimulacaoAsync(SolicitacaoSimulacao solicitacao)
     {
         BancoBMG bancoBMG;
-        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(BancoBMG.Nome);
+        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(NOME_BANCO);
         try 
         {   
-            bancoBMG = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, true, null, solicitacao.Usuario.GetSaldoFGTS(), solicitacao.Usuario.GetDataNascimento());
+            bancoBMG = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, true, null, solicitacao.Usuario.GetSaldoFGTS(), solicitacao.Usuario.GetDataNascimento());
             bancoBMG.CalcularValorLiberado();
         } 
         catch (HttpRequestException ex)
         {
-            bancoBMG = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null, null);
+            bancoBMG = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null, null);
             Console.WriteLine(bancoBMG.ToString());
         }
         catch (Exception ex) 
         {
-            bancoBMG = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null, null);
+            bancoBMG = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null, null);
             Console.WriteLine(bancoBMG.ToString());
         }
 
@@ -194,6 +201,8 @@ public class BancoItauService : IBancoService
 {
     private readonly BancoItauClient _bancoItauClient;
     private readonly IBancoRepositorio _bancoRepositorio;
+    private const string NOME_BANCO = "Banco Itaú";
+
     public BancoItauService(BancoItauClient bancoItauClient, IBancoRepositorio bancoRepositorio)
     {
         _bancoItauClient = bancoItauClient;
@@ -202,21 +211,21 @@ public class BancoItauService : IBancoService
     public async Task<IBanco> CalcularSimulacaoAsync(SolicitacaoSimulacao solicitacao)
     {
         BancoItau bancoItau;
-        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(BancoItau.Nome);
+        BancoInfoDTO bancoInfo = _bancoRepositorio.ObterDados(NOME_BANCO);
         try 
         {
             decimal valorLiberado = await _bancoItauClient.SimularAsync(solicitacao.Usuario.GetSaldoFGTS(), solicitacao.Usuario.GetDataNascimento());
-            bancoItau = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, true, null, valorLiberado);
+            bancoItau = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, true, null, valorLiberado);
             bancoItau.CalcularValorLiberado();
         } 
         catch (HttpRequestException ex)
         {
-            bancoItau = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoItau = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoItau.ToString());
         }
         catch (Exception ex) 
         {
-            bancoItau = new(bancoInfo.IdBanco, bancoInfo.UrlBanco, false, ex.Message, null);
+            bancoItau = new(bancoInfo.IdBanco, bancoInfo.Nome, bancoInfo.UrlBanco, false, ex.Message, null);
             Console.WriteLine(bancoItau.ToString());
         }
 

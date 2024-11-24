@@ -10,8 +10,19 @@ public class SolicitacaoSimulacao
 
     public SolicitacaoSimulacao(Cliente usuario)
     {
-        IdSolicitacao = new Random().Next(1, int.MaxValue);
         DataSolicitacao = DateTime.Now;
         Usuario = usuario;
+    }
+
+    public SolicitacaoSimulacao(int idSolicitacao, DateTime dataSolicitacao, Cliente usuario)
+    {
+        IdSolicitacao = idSolicitacao;
+        DataSolicitacao = dataSolicitacao;
+        Usuario = usuario;
+    }
+
+    public void AtualizarIdSolicitacao(int idSolicitacao)
+    {
+        IdSolicitacao = idSolicitacao;
     }
 }

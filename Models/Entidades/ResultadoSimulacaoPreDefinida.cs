@@ -5,13 +5,23 @@ using System.Collections.Generic;
 
 public class ResultadoSimulacaoPreDefinida : IResultadoSimulacao
 {
-    public int IdResultado { get; set; }
+    public SolicitacaoSimulacao Solicitacao { get; set; }
     public IBanco MelhorOferta { get; set; }
     public IEnumerable<IBanco> Bancos { get; set; }
 
-    public IBanco GetSimulacaoMelhorOferta()
+    public ResultadoSimulacaoPreDefinida(SolicitacaoSimulacao solicitacao, IEnumerable<IBanco> bancos)
     {
-        return MelhorOferta;
+        Solicitacao = solicitacao;
+        Bancos = bancos;
+        DefinirMelhorOferta();
+    }
+
+    public void DefinirMelhorOferta()
+    {
+        MelhorOferta = Bancos
+            .Where(b => b.ValorLiberado.HasValue)
+            .OrderBy(b => b.ValorLiberado.Value)
+            .FirstOrDefault();
     }
 
     public IEnumerable<IBanco> GetTodasOfertas()

@@ -29,16 +29,16 @@ public class SimulacoesController : ControllerBase
         return Ok(simulacao);
     }
 
-    // // GET /simulacoes/{id}
-    // [HttpGet("{id}")]
-    // public IActionResult GetById(int id)
-    // {
-    //     var simulacao = _simulacaoService.GetById(id);
-    //     if (simulacao == null)
-    //         return NotFound(new { message = "Simulação não encontrada" });
+    // GET /simulacoes/{id}
+    [HttpGet("{id}")]
+    public IActionResult ObterSimulacao(int id)
+    {
+        var simulacao = _simulacaoService.ObterSimulacao(id);
+        if (simulacao == null)
+            return NotFound(new { message = "Simulação não encontrada." });
 
-    //     return Ok(simulacao);
-    // }
+        return Ok(simulacao);
+    }
 
     // // POST /simulacoes
     // [HttpPost]
