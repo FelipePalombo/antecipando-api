@@ -6,17 +6,16 @@ using System;
 public class BancoSantander : IBanco
 {
     public int IdBanco { get; private set; }
-    public string Nome { get; private set; }
+    public static string Nome { get; private set; } = "Banco Santander";
     public string UrlBanco { get; private set; }
     public decimal? ValorLiberado { get; private set; } = null;
     public bool Disponibilidade { get; set; }
     public string MotivoIndisponbilidade { get; set; }
 
-    public BancoSantander(bool disponibilidade, string motivoIndisponbilidade, decimal? saldoFGTS, DateTime? dataNascimento)
+    public BancoSantander(int idBanco, string urlBanco, bool disponibilidade, string motivoIndisponbilidade, decimal? saldoFGTS, DateTime? dataNascimento)
     {
-        IdBanco = 4;
-        Nome = "Banco Santander";
-        UrlBanco = "https://www.santander.com.br/banco/saque-fgts/";
+        IdBanco = idBanco;
+        UrlBanco = urlBanco;
         if (saldoFGTS == null || dataNascimento == null)
         {
             Disponibilidade = false;

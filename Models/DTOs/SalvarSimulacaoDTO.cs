@@ -1,4 +1,4 @@
-namespace WebApi.Controllers.DTO;
+namespace WebApi.Controllers.DTOs;
 
 using System.ComponentModel.DataAnnotations;
 

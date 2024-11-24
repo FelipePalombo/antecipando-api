@@ -12,16 +12,13 @@ public interface ISimulacaoService
 
 public class SimulacaoService : ISimulacaoService
 {
-    private DataContext _context;
     private readonly IMapper _mapper;
     private IEnumerable<IBancoService> _bancoServices;
 
     public SimulacaoService(
-        DataContext context,
         IMapper mapper,
         IEnumerable<IBancoService> bancoServices)
     {
-        _context = context;
         _mapper = mapper;
         _bancoServices = bancoServices;
     }

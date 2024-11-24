@@ -6,7 +6,7 @@ using WebApi.Models.Interfaces;
 public class BancoBMG : IBanco
 {
     public int IdBanco { get; private set; }
-    public string Nome { get; private set; }
+    public static string Nome { get; private set; } = "Banco BMG";
     public string UrlBanco { get; private set; }
     public decimal? ValorLiberado { get; private set; } = null;
     public bool Disponibilidade { get; set; }
@@ -17,11 +17,10 @@ public class BancoBMG : IBanco
     private const decimal IOF_ADICIONAL = 0.0038m; // 0,38%
     private const decimal MAX_ANTECIPADO = 100000m;
 
-    public BancoBMG(bool disponibilidade, string motivoIndisponbilidade, decimal? saldoFGTS, DateTime? dataNascimento)
+    public BancoBMG(int idBanco, string urlBanco, bool disponibilidade, string motivoIndisponbilidade, decimal? saldoFGTS, DateTime? dataNascimento)
     {
-        IdBanco = 5;
-        Nome = "Banco BMG";
-        UrlBanco = "https://www.bancobmg.com.br/emprestimo/antecipacao-saque-aniversario-fgts/";
+        IdBanco = idBanco;
+        UrlBanco = urlBanco;
         if (saldoFGTS == null || dataNascimento == null)
         {
             Disponibilidade = false;

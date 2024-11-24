@@ -4,16 +4,15 @@ using WebApi.Models.Interfaces;
 public class BancoItau : IBanco
 {
     public int IdBanco {get; private set;}
-    public string Nome {get; private set;}
+    public static string Nome {get; private set;} = "Banco Itaú";
     public string UrlBanco {get; private set;}
     public decimal? ValorLiberado { get; private set; } = null;
     public bool Disponibilidade { get; set; }
     public string MotivoIndisponbilidade { get; set; }
-    public BancoItau(bool disponibilidade, string motivoIndisponbilidade, decimal? valorLiberado)
+    public BancoItau(int idBanco, string urlBanco, bool disponibilidade, string motivoIndisponbilidade, decimal? valorLiberado)
     {
-        IdBanco = 6;
-        Nome = "Banco Itaú";
-        UrlBanco = "https://emprestimo.itau.com.br/saque-aniversario-fgts/";
+        IdBanco = idBanco;
+        UrlBanco = urlBanco;
         Disponibilidade = disponibilidade;
         MotivoIndisponbilidade = motivoIndisponbilidade;
         ValorLiberado = valorLiberado.HasValue ? Math.Round(valorLiberado.Value, 2) : null;

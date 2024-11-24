@@ -2,9 +2,8 @@
 
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Models;
+using WebApi.Models.DTOs;
 using WebApi.Services;
-using DTO;
 
 
 [ApiController]

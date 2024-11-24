@@ -1,4 +1,4 @@
-namespace WebApi.Controllers.DTO;
+namespace WebApi.Models.DTOs;
 
 using System;
 

@@ -3,6 +3,7 @@ using WebApi.Helpers;
 using WebApi.Services;
 using WebApi.Infra;
 using WebApi.Models.Entidades;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
     var services = builder.Services;
     var env = builder.Environment;
  
-    services.AddDbContext<DataContext>();
+    // configurar o banco de dados
+    services.AddMySqlDataSource(builder.Configuration.GetConnectionString("Default")!);
+
+    // configurar o Identity
     services.AddCors();
     services.AddControllers().AddJsonOptions(x =>
     {
@@ -46,11 +50,13 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddScoped<IBancoService, BancoBMGService>();
     services.AddScoped<IBancoService, BancoItauService>();
     services.AddScoped<ISimulacaoService, SimulacaoService>();
+    
+    services.AddScoped<IBancoRepositorio, BancoRepositorio>();
 }
 
 var app = builder.Build();
 
-// configure o pipeline de requisição HTTP
+// configurar o pipeline de requisição HTTP
 {
     // global cors policy
     app.UseCors(x => x
@@ -74,4 +80,4 @@ var app = builder.Build();
     app.UseAuthorization();
 }
 
-app.Run("http://localhost:4000");
+app.Run();
