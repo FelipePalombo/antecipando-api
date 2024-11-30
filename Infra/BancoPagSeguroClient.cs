@@ -20,7 +20,7 @@ public class BancoPagSeguroClient
 
     public async Task<string> SimularAsync(decimal saldoFGTS)
     {
-        var response = await _httpClient.GetAsync($"ps-website-bff/v1/fgts/simulate?value={saldoFGTS}");
+        var response = await _httpClient.GetAsync($"ps-website-bff/v1/fgts/simulat?value={saldoFGTS}");
 
         response.EnsureSuccessStatusCode();
 
